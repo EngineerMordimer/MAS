@@ -9,6 +9,11 @@ public class Company extends Customer {
     private String NIP;
     private String REGON;
 
+    public Company (String name , String NIP){
+        this.setName(name);
+        this.setNIP(NIP);
+    }
+
     @Override
     double countDiscount() {
         return 0.3;
@@ -36,5 +41,9 @@ public class Company extends Customer {
 
     public void setREGON(String REGON) {
         this.REGON = REGON;
+    }
+
+    public String toString(){
+        return "Firma: "+this.getName();
     }
 }

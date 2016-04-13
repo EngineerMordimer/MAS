@@ -1,13 +1,10 @@
 package domain;
 
-/**
- * Created by maciek on 11/04/16.
- */
 abstract class Customer {
     private int id;
-    private String[]  address;                                                                      // atrybut złożony
+    private Address  address;                                                                      // atrybut złożony
     private static double salary = 500;                                                            // atrybut klasowy
-
+    private double discount;                                                                       // atrybut pochodny
 
     abstract double countDiscount();
 
@@ -19,11 +16,11 @@ abstract class Customer {
         this.id = id;
     }
 
-    public String[] getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String[] address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -34,4 +31,6 @@ abstract class Customer {
     public static void setSalary(double salary) {
         Customer.salary = salary;
     }
+
+    public double getDiscount(){ return countDiscount(); }
 }
