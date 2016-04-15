@@ -1,11 +1,12 @@
 package domain;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-public class Person {
+public class Person implements Serializable {
     private int id;
     private List<String> name;                                                                   // atrybut powtarzalny
     private String surname;
@@ -74,6 +75,29 @@ public class Person {
             System.out.println(person);
         }
     }
+
+    public static void saveExtension(){
+        try {
+            FileOutputStream fos = new FileOutputStream("extension.txt");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(extensionPerson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static Vector<Person> readFromFile(){
+        try{
+            FileInputStream fis = new FileInputStream("extension.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Vector<Person> personList = new Vector<>();
+            personList = (Vector<Person>) ois.readObject();
+            return personList;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     // metoda klasowa
     public static Date getTheOldestBirthDate(){

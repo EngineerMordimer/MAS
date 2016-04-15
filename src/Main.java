@@ -33,5 +33,12 @@ public class Main {
         System.out.println("Rabat dla " + customer2 + ", wynosi: " + customer2.getDiscount());
 
         System.out.println("Stawka podstawowa wynosi: " + customer1.getSalary() + "  -  " + customer2.getSalary());
+
+        Person.saveExtension();
+        Person person4 = new Person("Janek" , "Dodany" );
+        System.out.println("odczyt ekstensji:");
+
+        Person.setExtensionPerson(Person.readFromFile());
+        Person.showExtension();
     }
 }
