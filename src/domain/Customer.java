@@ -4,7 +4,7 @@ abstract class Customer {
     private int id;
     private Address  address;                                                                      // atrybut złożony
     private static double salary = 500;                                                            // atrybut klasowy
-    private double discount;                                                                       // atrybut pochodny
+    //private double discount;                                                                       // atrybut pochodny
 
     abstract double countDiscount();
 

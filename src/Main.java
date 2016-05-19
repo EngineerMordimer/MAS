@@ -3,13 +3,14 @@ import domain.Company;
 import domain.IndividualCustomer;
 import domain.Person;
 
+import java.io.*;
 import java.util.Date;
 
 /**
  * Created by maciek on 13/04/16.
  */
 public class Main {
-    public static void main (String[] args){
+    public static void main (String[] args) throws FileNotFoundException {
         Person person1 = new Person("Jacek" , "Kowalski");
         Person person2 = new Person("Paweł" , "Nowak" , new Date(91,11,26));
         Person person3 = new Person("Ewa" , "Odeszła" , new Date(22,10,26));
@@ -34,11 +35,27 @@ public class Main {
 
         System.out.println("Stawka podstawowa wynosi: " + customer1.getSalary() + "  -  " + customer2.getSalary());
 
-        Person.saveExtension();
-        Person person4 = new Person("Janek" , "Dodany" );
-        System.out.println("odczyt ekstensji:");
 
-        Person.setExtensionPerson(Person.readFromFile());
-        Person.showExtension();
+
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("extension.txt"));
+
+            Person.saveExtension(outputStream);
+            outputStream.close();
+            Person person5 = new Person("Janek" , "DodanyJeszczeRaz" );
+            System.out.println("odczyt ekstensji wersja prawidłowa:");
+
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("extension.txt"));
+
+            Person.readExtension(inputStream);
+
+            inputStream.close();
+            Person.showExtension();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Najstarsza osoba w bazie to "+ Person.getTheOldestPerson());
+
     }
 }

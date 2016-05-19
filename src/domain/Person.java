@@ -49,9 +49,32 @@ public class Person implements Serializable {
     public static Vector<Person> getExtensionPerson() {
         return extensionPerson;
     }
-    public static void setExtensionPerson(Vector<Person> extensionPerson) {
+    private static void setExtensionPerson(Vector<Person> extensionPerson) {
         Person.extensionPerson = extensionPerson;
     }
+
+    public static void saveExtension(){
+        try {
+            FileOutputStream fos = new FileOutputStream("extension.txt");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(extensionPerson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Vector<Person> readFromFile(){
+        Vector<Person> personList = new Vector<>();
+        try{
+            FileInputStream fis = new FileInputStream("extension.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            personList = (Vector<Person>) ois.readObject();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return personList;
+    }
+
 
     public String toString(){
         String text ="";
@@ -76,28 +99,30 @@ public class Person implements Serializable {
         }
     }
 
-    public static void saveExtension(){
-        try {
-            FileOutputStream fos = new FileOutputStream("extension.txt");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(extensionPerson);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static Vector<Person> readFromFile(){
-        try{
-            FileInputStream fis = new FileInputStream("extension.txt");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Vector<Person> personList = new Vector<>();
-            personList = (Vector<Person>) ois.readObject();
-            return personList;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
+    public static void saveExtension(ObjectOutputStream oos)throws Exception{
+        oos.writeObject(extensionPerson);
     }
 
+    public static void readExtension(ObjectInputStream ois) throws Exception{
+        Vector<Person> personList = new Vector<>();
+        personList = (Vector<Person>) ois.readObject();
+        setExtensionPerson(personList);
+    }
+
+
+    public static Person getTheOldestPerson(){
+        Date minDate = new Date();
+        Person oldestPerson = null;
+        for (Person person : extensionPerson){
+            if ( person.getBirthDate() != null ) {
+                if (person.getBirthDate().compareTo(minDate) < 0) {
+                    minDate = person.getBirthDate();
+                    oldestPerson = person;
+                }
+            }
+        }
+        return oldestPerson;
+    }
 
     // metoda klasowa
     public static Date getTheOldestBirthDate(){
@@ -111,6 +136,4 @@ public class Person implements Serializable {
         }
         return minDate;
     }
-
-
 }

@@ -31,6 +31,13 @@ public class IndividualCustomer extends Customer {
     public void setPerson(Person person) { this.person = person; }
 
     public String toString(){
-        return this.getPerson().toString() + " nazwisko panieńskie: " + this.getMaidenName();
+        if (this.getMaidenName() != null){
+            return this.getPerson().toString() + " nazwisko panieńskie: " + this.getMaidenName();
+        }
+        else {
+            return this.getPerson().toString();
+        }
+
+
     }
 }
